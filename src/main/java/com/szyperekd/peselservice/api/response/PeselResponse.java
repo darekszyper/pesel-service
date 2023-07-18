@@ -1,4 +1,6 @@
 package com.szyperekd.peselservice.api.response;
 
-public class PeselResponse {
+import java.time.LocalDate;
+
+public record PeselResponse(LocalDate birthDate, Gender gender) {
 }
