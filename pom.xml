@@ -14,7 +14,7 @@
 	<name>pesel-service</name>
 	<description>REST API for validating Social Security Number and retrieving associated information</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>20</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
