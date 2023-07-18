@@ -14,7 +14,8 @@ public class PeselService {
     private final PeselDecoder peselDecoder;
 
     public PeselResponse validateAndDecodePesel(PeselRequest peselRequest) throws InvalidPeselException {
-        peselValidator.assertIsValid(peselRequest);
-        return peselDecoder.dummyResponse(peselRequest);
+        String pesel = peselRequest.pesel();
+        peselValidator.assertIsValid(pesel);
+        return peselDecoder.retrieveData(pesel);
     }
 }
