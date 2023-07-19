@@ -1,4 +1,12 @@
 package com.szyperekd.peselservice.api.request;
 
+import com.szyperekd.peselservice.service.PeselValidator;
+
 public record PeselRequest(String pesel) {
+
+    private static final PeselValidator peselValidator = new PeselValidator();
+
+    public PeselRequest {
+        peselValidator.assertIsValid(pesel);
+    }
 }
