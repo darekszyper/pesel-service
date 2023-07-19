@@ -1,9 +1,11 @@
 package com.szyperekd.peselservice.service;
 
+
 import com.szyperekd.peselservice.exception.InvalidPeselException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.DateTimeException;
 import java.util.logging.Logger;
 
 @Component
@@ -12,23 +14,26 @@ public class PeselValidator {
     private static final int[] CONTROL_WEIGHTS = new int[]{1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
     private static final Logger LOGGER = Logger.getLogger(PeselValidator.class.getName());
 
+    private final PeselDecoder peselDecoder;
+
     public void assertIsValid(String pesel) throws InvalidPeselException {
         assertIsNotNull(pesel);
         assertIsLengthValid(pesel);
         assertIsOnlyDigits(pesel);
         assertIsControlDigitValid(pesel);
+        assertIsBirthDateValid(pesel);
     }
 
-    public void assertIsNotNull(String pesel) throws InvalidPeselException {
+    private void assertIsNotNull(String pesel) throws InvalidPeselException {
         LOGGER.info("assertIsNotNull(" + pesel + ")");
-        boolean isNotNull = pesel != null;
-        if (!isNotNull) {
+        boolean isNotNullOrEmpty = pesel != null;
+        if (!isNotNullOrEmpty) {
             throw new InvalidPeselException("PESEL not provided");
         }
-        LOGGER.info("assertIsNotNull(...) = " + isNotNull);
+        LOGGER.info("assertIsNotNull(...) = " + isNotNullOrEmpty);
     }
 
-    public void assertIsLengthValid(String pesel) throws InvalidPeselException {
+    private void assertIsLengthValid(String pesel) throws InvalidPeselException {
         LOGGER.info("assertIsLengthValid(" + pesel + ")");
         boolean isLengthValid = pesel.length() == 11;
         if (!isLengthValid) {
@@ -37,7 +42,7 @@ public class PeselValidator {
         LOGGER.info("assertIsNotNull(...) = " + isLengthValid);
     }
 
-    public void assertIsOnlyDigits(String pesel) throws InvalidPeselException {
+    private void assertIsOnlyDigits(String pesel) throws InvalidPeselException {
         LOGGER.info("assertIsOnlyDigits(" + pesel + ")");
         boolean isOnlyDigits = pesel.matches("[0-9]*");
         if (!isOnlyDigits) {
@@ -46,7 +51,7 @@ public class PeselValidator {
         LOGGER.info("assertIsOnlyDigits(...) = " + isOnlyDigits);
     }
 
-    public void assertIsControlDigitValid(String pesel) throws InvalidPeselException {
+    private void assertIsControlDigitValid(String pesel) throws InvalidPeselException {
         LOGGER.info("assertIsControlDigitValid(" + pesel + ")");
         int sum = 0;
         for (int i = 0; i < 10; i++) {
@@ -61,5 +66,13 @@ public class PeselValidator {
             throw new InvalidPeselException("Control Digit is invalid");
         }
         LOGGER.info("assertIsControlDigitValid(...) = " + isControlDigitValid);
+    }
+
+    private void assertIsBirthDateValid(String pesel) {
+        try {
+            peselDecoder.decodeBirthDate(pesel);
+        } catch (DateTimeException e) {
+            throw new InvalidPeselException("Birth Date is invalid");
+        }
     }
 }
