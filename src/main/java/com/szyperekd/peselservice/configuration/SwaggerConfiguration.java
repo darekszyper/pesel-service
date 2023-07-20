@@ -9,9 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfiguration {
 
     @Bean
-    public OpenAPI vamosServerOpenAPI() {
-        final String securitySchemeName = "bearerAuth";
-
+    public OpenAPI peselValidatorOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
                         .title("PESEL validation API")
