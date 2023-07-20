@@ -16,7 +16,7 @@ public class PeselValidator {
 
     private final PeselDecoder peselDecoder;
 
-    public void assertIsValid(String pesel) throws InvalidPeselException {
+    public void assertIsValid(String pesel) {
         assertIsNotNull(pesel);
         assertIsLengthValid(pesel);
         assertIsOnlyDigits(pesel);
@@ -24,7 +24,7 @@ public class PeselValidator {
         assertIsBirthDateValid(pesel);
     }
 
-    private void assertIsNotNull(String pesel) throws InvalidPeselException {
+    private void assertIsNotNull(String pesel) {
         LOGGER.info("assertIsNotNull(" + pesel + ")");
         boolean isNotNullOrEmpty = pesel != null;
         if (!isNotNullOrEmpty) {
@@ -33,7 +33,7 @@ public class PeselValidator {
         LOGGER.info("assertIsNotNull(...) = " + isNotNullOrEmpty);
     }
 
-    private void assertIsLengthValid(String pesel) throws InvalidPeselException {
+    private void assertIsLengthValid(String pesel) {
         LOGGER.info("assertIsLengthValid(" + pesel + ")");
         boolean isLengthValid = pesel.length() == 11;
         if (!isLengthValid) {
@@ -42,7 +42,7 @@ public class PeselValidator {
         LOGGER.info("assertIsNotNull(...) = " + isLengthValid);
     }
 
-    private void assertIsOnlyDigits(String pesel) throws InvalidPeselException {
+    private void assertIsOnlyDigits(String pesel) {
         LOGGER.info("assertIsOnlyDigits(" + pesel + ")");
         boolean isOnlyDigits = pesel.matches("[0-9]*");
         if (!isOnlyDigits) {
@@ -51,7 +51,7 @@ public class PeselValidator {
         LOGGER.info("assertIsOnlyDigits(...) = " + isOnlyDigits);
     }
 
-    private void assertIsControlDigitValid(String pesel) throws InvalidPeselException {
+    private void assertIsControlDigitValid(String pesel) {
         LOGGER.info("assertIsControlDigitValid(" + pesel + ")");
         int sum = 0;
         for (int i = 0; i < 10; i++) {
