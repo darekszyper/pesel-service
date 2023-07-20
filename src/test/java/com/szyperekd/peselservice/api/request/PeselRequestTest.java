@@ -27,14 +27,14 @@ class PeselRequestTest {
 
     private static Stream<Arguments> provideCorrectPesels() {
         return Stream.of(
-                Arguments.of("77031167334"),
-                Arguments.of("04242625931"),
-                Arguments.of("92082683499"),
-                Arguments.of("58883175997"),
-                Arguments.of("58083175993"),
-                Arguments.of("58283175999"),
-                Arguments.of("58483175995"),
-                Arguments.of("58683175991")
+                Arguments.of("64020698643"),
+                Arguments.of("78020218815"),
+                Arguments.of("61121697421"),
+                Arguments.of("56080527522"),
+                Arguments.of("85060552692"),
+                Arguments.of("51060426541"),
+                Arguments.of("92100226943"),
+                Arguments.of("77122972353")
         );
     }
 
@@ -58,6 +58,7 @@ class PeselRequestTest {
                 Arguments.of("85122-96612"),
                 Arguments.of("950510501759"),
                 Arguments.of(""),
+                Arguments.of("\n"),
                 Arguments.of("11111111111"),
                 Arguments.of("95051001755"),
                 Arguments.of("           "),
