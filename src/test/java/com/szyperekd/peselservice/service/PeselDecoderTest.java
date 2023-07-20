@@ -1,6 +1,6 @@
 package com.szyperekd.peselservice.service;
 
-import com.szyperekd.peselservice.api.response.Gender;
+import com.szyperekd.peselservice.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,8 +10,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.time.LocalDate;
 import java.util.stream.Stream;
 
-import static com.szyperekd.peselservice.api.response.Gender.FEMALE;
-import static com.szyperekd.peselservice.api.response.Gender.MALE;
+import static com.szyperekd.peselservice.Gender.FEMALE;
+import static com.szyperekd.peselservice.Gender.MALE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PeselDecoderTest {
