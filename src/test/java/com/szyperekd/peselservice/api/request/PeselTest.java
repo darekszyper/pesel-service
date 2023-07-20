@@ -1,5 +1,6 @@
 package com.szyperekd.peselservice.api.request;
 
+import com.szyperekd.peselservice.Pesel;
 import com.szyperekd.peselservice.exception.InvalidPeselException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,14 +13,14 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class PeselRequestTest {
+class PeselTest {
 
     @ParameterizedTest
     @MethodSource("provideCorrectPesels")
     @DisplayName("Should create valid object from correct pesel number")
     void shouldCreateValidObjetOfPesel(String peselRequest) {
         // when
-        var pesel = new PeselRequest(peselRequest);
+        var pesel = new Pesel(peselRequest);
 
         //then
         assertNotNull(pesel);
@@ -42,14 +43,14 @@ class PeselRequestTest {
     @NullSource
     @DisplayName("Should throw InvalidPeselException when PESEL is null")
     void shouldThrowInvalidPeselExceptionWhenPeselIsNull(String peselRequest) {
-        assertThrows(InvalidPeselException.class, () -> new PeselRequest(peselRequest));
+        assertThrows(InvalidPeselException.class, () -> new Pesel(peselRequest));
     }
 
     @ParameterizedTest
     @MethodSource("provideInvalidPesels")
     @DisplayName("Should throw InvalidPeselException object when PESEL is invalid")
     void shouldThrowInvalidPeselExceptionWhenPeselIsInvalid(String peselRequest) {
-        assertThrows(InvalidPeselException.class, () -> new PeselRequest(peselRequest));
+        assertThrows(InvalidPeselException.class, () -> new Pesel(peselRequest));
     }
 
     private static Stream<Arguments> provideInvalidPesels() {

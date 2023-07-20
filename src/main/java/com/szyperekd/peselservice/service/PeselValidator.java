@@ -2,57 +2,52 @@ package com.szyperekd.peselservice.service;
 
 
 import com.szyperekd.peselservice.exception.InvalidPeselException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.logging.Logger;
 
-@Component
-@RequiredArgsConstructor
 public class PeselValidator {
     private static final int[] CONTROL_WEIGHTS = new int[]{1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
     private static final Logger LOGGER = Logger.getLogger(PeselValidator.class.getName());
 
-    private final PeselDecoder peselDecoder;
-
-    public void assertIsValid(String pesel) {
-        assertIsNotNull(pesel);
-        assertIsLengthValid(pesel);
-        assertIsOnlyDigits(pesel);
-        assertIsControlDigitValid(pesel);
-        assertIsBirthDateValid(pesel);
+    public void isValid(String pesel) {
+        isNotNullOrBlank(pesel);
+        isLengthValid(pesel);
+        isOnlyDigits(pesel);
+        isControlDigitValid(pesel);
+        isBirthDateValid(pesel);
     }
 
-    private void assertIsNotNull(String pesel) {
-        LOGGER.info("assertIsNotNull(" + pesel + ")");
-        boolean isNotNullOrEmpty = pesel != null;
-        if (!isNotNullOrEmpty) {
+    private void isNotNullOrBlank(String pesel) {
+        LOGGER.info("isNotNullOrBlank(" + pesel + ")");
+        boolean isNotNullOrBlank = pesel != null && !pesel.isBlank();
+        if (!isNotNullOrBlank) {
             throw new InvalidPeselException("PESEL not provided");
         }
-        LOGGER.info("assertIsNotNull(...) = " + isNotNullOrEmpty);
+        LOGGER.info("isNotNullOrBlank(...) = " + isNotNullOrBlank);
     }
 
-    private void assertIsLengthValid(String pesel) {
-        LOGGER.info("assertIsLengthValid(" + pesel + ")");
+    private void isLengthValid(String pesel) {
+        LOGGER.info("isLengthValid(" + pesel + ")");
         boolean isLengthValid = pesel.length() == 11;
         if (!isLengthValid) {
             throw new InvalidPeselException("PESEL length is invalid");
         }
-        LOGGER.info("assertIsNotNull(...) = " + isLengthValid);
+        LOGGER.info("isLengthValid(...) = " + isLengthValid);
     }
 
-    private void assertIsOnlyDigits(String pesel) {
-        LOGGER.info("assertIsOnlyDigits(" + pesel + ")");
+    private void isOnlyDigits(String pesel) {
+        LOGGER.info("isOnlyDigits(" + pesel + ")");
         boolean isOnlyDigits = pesel.matches("[0-9]*");
         if (!isOnlyDigits) {
             throw new InvalidPeselException("PESEL contains forbidden character");
         }
-        LOGGER.info("assertIsOnlyDigits(...) = " + isOnlyDigits);
+        LOGGER.info("isOnlyDigits(...) = " + isOnlyDigits);
     }
 
-    private void assertIsControlDigitValid(String pesel) {
-        LOGGER.info("assertIsControlDigitValid(" + pesel + ")");
+    private void isControlDigitValid(String pesel) {
+        LOGGER.info("isControlDigitValid(" + pesel + ")");
         int sum = 0;
         for (int i = 0; i < 10; i++) {
             int multipliedByWeight = CONTROL_WEIGHTS[i] * Character.getNumericValue(pesel.charAt(i));
@@ -65,12 +60,37 @@ public class PeselValidator {
         if (!isControlDigitValid) {
             throw new InvalidPeselException("Control Digit is invalid");
         }
-        LOGGER.info("assertIsControlDigitValid(...) = " + isControlDigitValid);
+        LOGGER.info("isControlDigitValid(...) = " + isControlDigitValid);
     }
 
-    private void assertIsBirthDateValid(String pesel) {
+    private void isBirthDateValid(String pesel) {
         try {
-            peselDecoder.decodeBirthDate(pesel);
+            int year = 1900;
+            int month = Integer.parseInt(pesel.substring(2, 4));
+            int day = Integer.parseInt(pesel.substring(4, 6));
+
+            int monthFirstDigit = Character.getNumericValue(pesel.charAt(2));
+            switch (monthFirstDigit) {
+                case 8, 9 -> {
+                    month -= 80;
+                    year = 1800;
+                }
+                case 2, 3 -> {
+                    month -= 20;
+                    year = 2000;
+                }
+                case 4, 5 -> {
+                    month -= 40;
+                    year = 2100;
+                }
+                case 6, 7 -> {
+                    month -= 60;
+                    year = 2200;
+                }
+            }
+
+            year += Integer.parseInt(pesel.substring(0, 2));
+            LocalDate.of(year, month, day);
         } catch (DateTimeException e) {
             throw new InvalidPeselException("Birth Date is invalid");
         }
