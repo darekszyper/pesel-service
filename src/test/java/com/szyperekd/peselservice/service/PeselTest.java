@@ -1,6 +1,5 @@
-package com.szyperekd.peselservice.api.request;
+package com.szyperekd.peselservice.service;
 
-import com.szyperekd.peselservice.service.Pesel;
 import com.szyperekd.peselservice.exception.InvalidPeselException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
