@@ -11,7 +11,7 @@ public class PeselValidator {
     private static final int[] CONTROL_WEIGHTS = new int[]{1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
     private static final Logger LOGGER = Logger.getLogger(PeselValidator.class.getName());
 
-    public void isValid(String pesel) {
+    void isValid(String pesel) {
         isNotNullOrBlank(pesel);
         isLengthValid(pesel);
         isOnlyDigits(pesel);
@@ -64,6 +64,7 @@ public class PeselValidator {
     }
 
     private void isBirthDateValid(String pesel) {
+        LOGGER.info("isBirthDateValid(" + pesel + ")");
         try {
             int year = 1900;
             int month = Integer.parseInt(pesel.substring(2, 4));
@@ -94,5 +95,6 @@ public class PeselValidator {
         } catch (DateTimeException e) {
             throw new InvalidPeselException("Birth Date is invalid");
         }
+        LOGGER.info("isBirthDateValid(...) = true");
     }
 }
