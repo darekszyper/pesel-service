@@ -1,8 +1,6 @@
 package com.szyperekd.peselservice.service;
 
 import com.szyperekd.peselservice.Gender;
-import com.szyperekd.peselservice.Pesel;
-import com.szyperekd.peselservice.PeselResponse;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
@@ -14,13 +12,20 @@ public class PeselDecoder {
 
     private static final Logger LOGGER = Logger.getLogger(PeselDecoder.class.getName());
 
-    PeselResponse retrieveData(Pesel peselObject) {
-        String pesel = peselObject.pesel();
+    Pesel retrieveData(Pesel peselObject) {
+        String pesel = peselObject.getPesel();
         LOGGER.info("retrieveData(" + pesel + ")");
+
         LocalDate birthDate = decodeBirthDate(pesel);
+        peselObject.setBirthDate(birthDate);
+
         DayOfWeek birthDayOfWeek = birthDate.getDayOfWeek();
+        peselObject.setBirthDayOfWeek(birthDayOfWeek);
+
         Gender gender = decodeGender(pesel);
-        return new PeselResponse(gender, birthDate, birthDayOfWeek);
+        peselObject.setGender(gender);
+
+        return peselObject;
     }
 
     LocalDate decodeBirthDate(String pesel) {
