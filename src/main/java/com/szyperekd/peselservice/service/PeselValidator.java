@@ -2,14 +2,14 @@ package com.szyperekd.peselservice.service;
 
 
 import com.szyperekd.peselservice.exception.InvalidPeselException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.logging.Logger;
 
+@Slf4j
 public class PeselValidator {
     private static final int[] CONTROL_WEIGHTS = new int[]{1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
-    private static final Logger LOGGER = Logger.getLogger(PeselValidator.class.getName());
 
     void isValid(String pesel) {
         isNotNullOrBlank(pesel);
@@ -20,34 +20,34 @@ public class PeselValidator {
     }
 
     private void isNotNullOrBlank(String pesel) {
-        LOGGER.info("isNotNullOrBlank(" + pesel + ")");
+       log.info("isNotNullOrBlank(" + pesel + ")");
         boolean isNotNullOrBlank = pesel != null && !pesel.isBlank();
         if (!isNotNullOrBlank) {
             throw new InvalidPeselException("PESEL not provided");
         }
-        LOGGER.info("isNotNullOrBlank(...) = " + isNotNullOrBlank);
+        log.info("isNotNullOrBlank(...) = " + isNotNullOrBlank);
     }
 
     private void isLengthValid(String pesel) {
-        LOGGER.info("isLengthValid(" + pesel + ")");
+        log.info("isLengthValid(" + pesel + ")");
         boolean isLengthValid = pesel.length() == 11;
         if (!isLengthValid) {
             throw new InvalidPeselException("PESEL length is invalid");
         }
-        LOGGER.info("isLengthValid(...) = " + isLengthValid);
+        //LOGGER.info("isLengthValid(...) = " + isLengthValid);
     }
 
     private void isOnlyDigits(String pesel) {
-        LOGGER.info("isOnlyDigits(" + pesel + ")");
+        log.info("isOnlyDigits(" + pesel + ")");
         boolean isOnlyDigits = pesel.matches("[0-9]*");
         if (!isOnlyDigits) {
             throw new InvalidPeselException("PESEL contains forbidden character");
         }
-        LOGGER.info("isOnlyDigits(...) = " + isOnlyDigits);
+        log.info("isOnlyDigits(...) = " + isOnlyDigits);
     }
 
     private void isControlDigitValid(String pesel) {
-        LOGGER.info("isControlDigitValid(" + pesel + ")");
+        log.info("isControlDigitValid(" + pesel + ")");
         int sum = 0;
         for (int i = 0; i < 10; i++) {
             int multipliedByWeight = CONTROL_WEIGHTS[i] * Character.getNumericValue(pesel.charAt(i));
@@ -60,11 +60,11 @@ public class PeselValidator {
         if (!isControlDigitValid) {
             throw new InvalidPeselException("Control Digit is invalid");
         }
-        LOGGER.info("isControlDigitValid(...) = " + isControlDigitValid);
+        log.info("isControlDigitValid(...) = " + isControlDigitValid);
     }
 
     private void isBirthDateValid(String pesel) {
-        LOGGER.info("isBirthDateValid(" + pesel + ")");
+        log.info("isBirthDateValid(" + pesel + ")");
         try {
             int year = 1900;
             int month = Integer.parseInt(pesel.substring(2, 4));
@@ -95,6 +95,6 @@ public class PeselValidator {
         } catch (DateTimeException e) {
             throw new InvalidPeselException("Birth Date is invalid");
         }
-        LOGGER.info("isBirthDateValid(...) = true");
+        log.info("isBirthDateValid(...) = true");
     }
 }

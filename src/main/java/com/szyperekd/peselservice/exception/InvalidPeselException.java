@@ -4,6 +4,5 @@ public class InvalidPeselException extends RuntimeException {
 
     public InvalidPeselException(String message) {
         super(message);
-        printStackTrace();
     }
 }

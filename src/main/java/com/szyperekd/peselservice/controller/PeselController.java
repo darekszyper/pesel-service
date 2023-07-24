@@ -4,7 +4,7 @@ import com.szyperekd.peselservice.dto.PeselRequest;
 import com.szyperekd.peselservice.dto.PeselResponse;
 import com.szyperekd.peselservice.service.PeselService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import static com.szyperekd.peselservice.controller.PeselController.BASE_URL;
@@ -20,7 +20,8 @@ public class PeselController {
     private final PeselService peselService;
 
     @PostMapping(PESEL_SERVICE)
-    public ResponseEntity<PeselResponse> validateAndDecodePesel(@RequestBody PeselRequest peselRequest) {
-        return ResponseEntity.ok(peselService.validateAndDecodePesel(peselRequest));
+    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
+    public PeselResponse validateAndDecodePesel(@RequestBody PeselRequest peselRequest) {
+        return peselService.validateAndDecodePesel(peselRequest);
     }
 }

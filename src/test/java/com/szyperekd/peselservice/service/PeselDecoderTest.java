@@ -1,6 +1,6 @@
 package com.szyperekd.peselservice.service;
 
-import com.szyperekd.peselservice.Gender;
+import com.szyperekd.peselservice.core.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,8 +10,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.time.LocalDate;
 import java.util.stream.Stream;
 
-import static com.szyperekd.peselservice.Gender.FEMALE;
-import static com.szyperekd.peselservice.Gender.MALE;
+import static com.szyperekd.peselservice.core.Gender.FEMALE;
+import static com.szyperekd.peselservice.core.Gender.MALE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PeselDecoderTest {
@@ -24,6 +24,7 @@ class PeselDecoderTest {
     }
 
     @ParameterizedTest
+    //given
     @MethodSource("providePeselsFromEachCentury")
     @DisplayName("Should return date for PESEL from each century")
     void shouldReturnCorrectDateForPeselFromEachCentury(String peselRequest, LocalDate expectedResult) {
@@ -48,6 +49,7 @@ class PeselDecoderTest {
     }
 
     @ParameterizedTest
+    //given
     @MethodSource("providePeselsAndGender")
     @DisplayName("Should return gender from PESEL")
     void shouldReturnGenderFromPesel(String peselRequest, Gender expectedResult) {

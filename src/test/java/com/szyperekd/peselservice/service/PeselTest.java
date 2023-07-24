@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class PeselTest {
 
     @ParameterizedTest
+    //given
     @MethodSource("provideCorrectPesels")
     @DisplayName("Should create valid object from correct pesel number")
     void shouldCreateValidObjetOfPesel(String peselRequest) {
@@ -39,6 +40,7 @@ class PeselTest {
     }
 
     @ParameterizedTest
+    //given
     @NullSource
     @DisplayName("Should throw InvalidPeselException when PESEL is null")
     void shouldThrowInvalidPeselExceptionWhenPeselIsNull(String peselRequest) {
@@ -46,6 +48,7 @@ class PeselTest {
     }
 
     @ParameterizedTest
+    //given
     @MethodSource("provideInvalidPesels")
     @DisplayName("Should throw InvalidPeselException object when PESEL is invalid")
     void shouldThrowInvalidPeselExceptionWhenPeselIsInvalid(String peselRequest) {

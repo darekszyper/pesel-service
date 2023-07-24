@@ -1,20 +1,19 @@
 package com.szyperekd.peselservice.service;
 
-import com.szyperekd.peselservice.Gender;
+import com.szyperekd.peselservice.core.Gender;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.logging.Logger;
 
 @Component
+@Slf4j
 public class PeselDecoder {
 
-    private static final Logger LOGGER = Logger.getLogger(PeselDecoder.class.getName());
 
     Pesel retrieveData(Pesel peselObject) {
         String pesel = peselObject.getPesel();
-        LOGGER.info("retrieveData(" + pesel + ")");
 
         LocalDate birthDate = decodeBirthDate(pesel);
         peselObject.setBirthDate(birthDate);
@@ -29,7 +28,7 @@ public class PeselDecoder {
     }
 
     LocalDate decodeBirthDate(String pesel) {
-        LOGGER.info("decodeBirthDate(" + pesel + ")");
+        log.info("decodeBirthDate(" + pesel + ")");
         int year = 1900;
         int month = Integer.parseInt(pesel.substring(2, 4));
         int day = Integer.parseInt(pesel.substring(4, 6));
@@ -56,15 +55,15 @@ public class PeselDecoder {
 
         year += Integer.parseInt(pesel.substring(0, 2));
         LocalDate birthDate = LocalDate.of(year, month, day);
-        LOGGER.info("decodeBirthDate(...) = " + birthDate);
+        log.info("decodeBirthDate(...) = " + birthDate);
         return birthDate;
     }
 
     Gender decodeGender(String pesel) {
-        LOGGER.info("decodeGender(" + pesel + ")");
+        log.info("decodeGender(" + pesel + ")");
         int genderDigit = Character.getNumericValue(pesel.charAt(9));
         Gender gender = genderDigit % 2 == 0 ? Gender.FEMALE : Gender.MALE;
-        LOGGER.info("decodeGender(...) = " + gender);
+        log.info("decodeGender(...) = " + gender);
         return gender;
     }
 }
