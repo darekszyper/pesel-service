@@ -1,4 +1,4 @@
-package com.szyperekd.peselservice;
+package com.szyperekd.peselservice.core;
 
 public enum Gender {
     MALE,
