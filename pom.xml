@@ -12,7 +12,7 @@
 	<artifactId>pesel-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>pesel-service</name>
-	<description>REST API for validating Polish Social Security Number and retrieving associated information</description>
+	<description>REST API for validating Polish Personal ID Number and retrieving associated information</description>
 	<properties>
 		<java.version>20</java.version>
 	</properties>

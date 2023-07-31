@@ -16,7 +16,6 @@ public class PeselController {
 
     public final static String BASE_URL = "/api/v1";
     public final static String PESEL_SERVICE = "/pesel";
-
     private final PeselService peselService;
 
     @PostMapping(PESEL_SERVICE)

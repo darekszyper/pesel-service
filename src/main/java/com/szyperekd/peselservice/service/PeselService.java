@@ -12,6 +12,7 @@ public class PeselService {
 
     private final PeselMapper peselMapper;
     private final PeselDecoder peselDecoder;
+
     public PeselResponse validateAndDecodePesel(PeselRequest peselRequest) {
         Pesel pesel = peselMapper.mapPeselRequestToPesel(peselRequest);
         Pesel decodedPesel = peselDecoder.retrieveData(pesel);
