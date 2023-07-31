@@ -34,7 +34,7 @@ public class PeselValidator {
         if (!isLengthValid) {
             throw new InvalidPeselException("PESEL length is invalid");
         }
-        //LOGGER.info("isLengthValid(...) = " + isLengthValid);
+        log.info("isLengthValid(...) = " + isLengthValid);
     }
 
     private void isOnlyDigits(String pesel) {
