@@ -26,6 +26,7 @@ The Pesel Service REST API is developed using the following technologies:
 - Lombok: Used for reducing boilerplate code with annotations like `@Getter`, `@Setter`, and `@ToString`
 - MapStruct: Used for mapping between DTOs and domain objects
 - Swagger: OpenAPI Documentation
+- JUnit 5 Parameterized Tests
 
 ## Usage
 
